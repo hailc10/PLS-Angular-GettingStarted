@@ -12,15 +12,15 @@ export class ProductListComponent implements OnInit {
     imageMargin: number = 2;
     showImage: boolean = true;
 
-    private _listFilter: string = '';
-
-    get listFilter(): string{
+    private _listFilter = '';
+    
+    get listFilter():string {
         return this._listFilter;
     }
 
     set listFilter(value: string){
         this._listFilter = value;
-        console.log('In setter:' , value);
+        // this.filterProducts = this.performFilter();
         this.filterProducts = this.performFilter(value);
     }
 
@@ -49,10 +49,15 @@ export class ProductListComponent implements OnInit {
           }
     ];
 
+    // performFilter(): IProduct[]{
+    //     return this.products.filter((product:IProduct) =>
+    //     product.productName.toLowerCase().includes(this._listFilter))
+    // }
+
     performFilter(filterBy: string): IProduct[] {
         filterBy = filterBy.toLowerCase();
         return this.products.filter((product: IProduct) =>
-            product.productName.toLocaleLowerCase().includes(filterBy));
+        product.productName.toLocaleLowerCase().includes(filterBy));
     }
 
     toggleImage(): void{
@@ -60,6 +65,10 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.listFilter = 'cart';
+        this.listFilter = '';
+    }
+
+    onRatingClicked(message: string): void{
+        this.pageTitle = 'Product List: ' + message; 
     }
 }
